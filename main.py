@@ -45,32 +45,46 @@ class mwindow(QtWidgets.QMainWindow, Ui_MainWindow):
         start='"'+syear+'-'+smonth+'-01"'
         end='"'+eyear+'-'+emonth+'-31"'
 
-        #数据库查询
-        conn=sqlite3.connect('mrsoft.db')
-        cursor=conn.cursor()
-        sql='select*from income where income_date>='+start+' and income_date<='+end
-        cursor.execute(sql)
-        result1=cursor.fetchall()
-        num=len(result1)
+        if emonth>=smonth:
+            #数据库查询
+            conn=sqlite3.connect('mrsoft.db')
+            cursor=conn.cursor()
+            sql='select*from income where income_date>='+start+' and income_date<='+end
+            cursor.execute(sql)
+            result1=cursor.fetchall()
+            num=len(result1)
 
-        self.model=QStandardItemModel(num,3)#数据写入表格
-        for row in range(num):
-            for column in range(3):
-                i=QStandardItem(str(result1[row][column]))
-                self.model.setItem(row,column,i)
-        self.model.setHorizontalHeaderLabels(['年份','备注','金额'])
-        self.tableView.setModel(self.model)
-        self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.model=QStandardItemModel(num,3)#数据写入表格
+            for row in range(num):
+                for column in range(3):
+                    i=QStandardItem(str(result1[row][column]))
+                    self.model.setItem(row,column,i)
+            self.model.setHorizontalHeaderLabels(['年份','备注','金额'])
+            self.tableView.setModel(self.model)
+            self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        #对查询金额统计
-        sun=0
-        for x in range(num):
-            income=result1[x][2]
-            sun=sun+income
-        sun=round(sun,2)
-        self.lineEdit.setText(str(sun)+'元')#设置输入框内容
-        cursor.close()
-        conn.close()
+            #对查询金额统计
+            sun=0
+            for x in range(num):
+                income=result1[x][2]
+                sun=sun+income
+            sun=round(sun,2)
+            arv=round(sun/(int(emonth)-int(smonth)+1),2)
+            self.label_3.setText("当前查询总额：")
+            self.label_8.setText("月均")
+            self.lineEdit.show()
+            self.lineEdit_2.show()
+            self.lineEdit.setText(str(sun)+'元')#设置输入框内容
+            self.lineEdit_2.setText(str(arv)+'元')
+            cursor.close()
+            conn.close()
+        else:
+            self.model=QStandardItemModel(0,0)
+            self.tableView.setModel(self.model)
+            self.label_3.setText('查询错误，请检查查询范围')
+            self.label_8.setText('')
+            self.lineEdit.hide()
+            self.lineEdit_2.hide()
     
     #二级查询页面弹出
     def createdb(self):
