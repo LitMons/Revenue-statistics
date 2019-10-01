@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
+    <width>498</width>
     <height>600</height>
    </rect>
   </property>
@@ -113,7 +113,7 @@
      <rect>
       <x>30</x>
       <y>520</y>
-      <width>226</width>
+      <width>351</width>
       <height>23</height>
      </rect>
     </property>
@@ -127,6 +127,16 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>月均</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
     </layout>
    </widget>
@@ -146,7 +156,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>501</width>
+     <width>498</width>
      <height>22</height>
     </rect>
    </property>
