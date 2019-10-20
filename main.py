@@ -9,15 +9,18 @@ from addmain import *
 
 import sqlite3
 
-#收入统计程序v1.0
+#收入统计程序v1.0.1
 #增加数据添加功能
 #数据修改功能暂未开放
+#修改显示方式，取消lineEdit显示，使用label直接显示，程序界面未更新
 
 class mwindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self,parent=None):
         super(mwindow, self).__init__(parent)
         self.setupUi(self)
         
+        self.lineEdit.hide()
+        self.lineEdit_2.hide()
         self.pushButton_2.setEnabled(False)
         self.comboBox.addItem('2019')
         self.comboBox_3.addItem('2019')
@@ -70,12 +73,12 @@ class mwindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 sun=sun+income
             sun=round(sun,2)
             arv=round(sun/(int(emonth)-int(smonth)+1),2)
-            self.label_3.setText("当前查询总额：")
-            self.label_8.setText("月均")
-            self.lineEdit.show()
-            self.lineEdit_2.show()
-            self.lineEdit.setText(str(sun)+'元')#设置输入框内容
-            self.lineEdit_2.setText(str(arv)+'元')
+            text1='当前查询总额:'+str(sun)+'元'
+            text2='月均:'+str(arv)+'元'
+            self.label_3.setText(text1)
+            self.label_8.setText(text2)
+            #self.lineEdit.setText(str(sun)+'元')#设置输入框内容
+            #self.lineEdit_2.setText(str(arv)+'元')
             cursor.close()
             conn.close()
         else:
